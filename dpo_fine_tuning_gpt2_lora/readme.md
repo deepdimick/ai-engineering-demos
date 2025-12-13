@@ -7,9 +7,6 @@
 
 A parameter-efficient fine-tuning pipeline that aligns GPT-2 with human preferences using Direct Preference Optimization (DPO) and Low-Rank Adaptation (LoRA).
 
-<!-- Optional: Add a screenshot or demo gif here -->
-<!-- ![Demo](images/training_curves.png) -->
-
 ## Problem Statement
 
 Aligning language models with human preferences traditionally requires complex reinforcement learning pipelines with separate reward models. DPO simplifies this by directly optimizing on preference data, while LoRA enables efficient fine-tuning on consumer hardware.

@@ -7,9 +7,6 @@
 
 A deep learning pipeline that classifies aircraft surface damage (dent vs. crack) using transfer learning with VGG16, and generates natural language descriptions using the BLIP transformer model.
 
-<!-- Optional: Add a screenshot or demo gif here -->
-<!-- ![Demo](images/demo.png) -->
-
 ## Problem Statement
 
 Manual aircraft inspection is time-consuming and prone to human error. This project automates damage detection using computer vision and adds interpretability through natural language captioning.

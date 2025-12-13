@@ -38,13 +38,13 @@ Open `fashion_mnist_classification.ipynb` in Jupyter and execute all cells seque
 
 Two CNN implementations are provided:
 
-| Component | Standard CNN | Batch-Normalized CNN |
-|-----------|-------------|----------------------|
-| **Conv Layer 1** | Conv2d(1→16, 5×5) + ReLU + MaxPool | Conv2d(1→16, 5×5) + BatchNorm + ReLU + MaxPool |
-| **Conv Layer 2** | Conv2d(16→32, 5×5) + ReLU + MaxPool | Conv2d(16→32, 5×5) + BatchNorm + ReLU + MaxPool |
-| **Fully Connected** | Linear(32×4×4→10) | Linear(32×4×4→10) + BatchNorm |
-| **Optimizer** | SGD (lr=0.1) | SGD (lr=0.1) |
-| **Loss Function** | Cross Entropy Loss | Cross Entropy Loss |
+| Component                 | Standard CNN                          | Batch-Normalized CNN                              |
+| ------------------------- | ------------------------------------- | ------------------------------------------------- |
+| **Conv Layer 1**    | Conv2d(1→16, 5×5) + ReLU + MaxPool  | Conv2d(1→16, 5×5) + BatchNorm + ReLU + MaxPool  |
+| **Conv Layer 2**    | Conv2d(16→32, 5×5) + ReLU + MaxPool | Conv2d(16→32, 5×5) + BatchNorm + ReLU + MaxPool |
+| **Fully Connected** | Linear(32×4×4→10)                  | Linear(32×4×4→10) + BatchNorm                  |
+| **Optimizer**       | SGD (lr=0.1)                          | SGD (lr=0.1)                                      |
+| **Loss Function**   | Cross Entropy Loss                    | Cross Entropy Loss                                |
 
 ## Project Structure
 
@@ -83,5 +83,6 @@ MIT
 
 ## Acknowledgments
 
-- Dataset: [Fashion MNIST](https://github.com/zalandoresearch/fashion-mnist) by Zalando Research (MIT License)
+- Project completed as part of IBM AI Engineering Professional Certificate
+- Dataset:[Fashion MNIST](https://github.com/zalandoresearch/fashion-mnist) by Zalando Research (MIT License)
 - Based on IBM Deep Learning course materials

@@ -6,9 +6,6 @@
 
 A complete implementation of a sequence-to-sequence transformer model for German-to-English neural machine translation (NMT), built from scratch using PyTorch. This project demonstrates core transformer architecture concepts including multi-head attention, positional encoding, and the encoder-decoder paradigm.
 
-<!-- Optional: Add an architecture diagram or example here -->
-<!-- ![Architecture](images/transformer_architecture.png) -->
-
 ## Problem Statement
 
 Language translation remains a critical challenge in natural language processing. This project implements a transformer-based neural machine translation system that can translate German text to English, showcasing how transformers overcome limitations of traditional RNN/LSTM models through parallel processing and improved context understanding.
@@ -59,16 +56,16 @@ jupyter notebook seq2seq_transformer_nmt.ipynb
 
 ## Model Architecture
 
-| Component | Details |
-|-----------|---------|
-| **Embedding Dimension** | 512 |
-| **Attention Heads** | 8 |
-| **Feed-Forward Dimension** | 512 |
-| **Encoder Layers** | 3 |
-| **Decoder Layers** | 3 |
-| **Dropout** | 0.1 |
-| **Optimizer** | Adam (lr=0.0001, β₁=0.9, β₂=0.98) |
-| **Loss Function** | Cross-Entropy (ignores padding tokens) |
+| Component                        | Details                                |
+| -------------------------------- | -------------------------------------- |
+| **Embedding Dimension**    | 512                                    |
+| **Attention Heads**        | 8                                      |
+| **Feed-Forward Dimension** | 512                                    |
+| **Encoder Layers**         | 3                                      |
+| **Decoder Layers**         | 3                                      |
+| **Dropout**                | 0.1                                    |
+| **Optimizer**              | Adam (lr=0.0001, β₁=0.9, β₂=0.98)  |
+| **Loss Function**          | Cross-Entropy (ignores padding tokens) |
 
 ### Architecture Overview
 
@@ -108,28 +105,34 @@ English Text Output
 ## Key Concepts Implemented
 
 ### 1. **Masking**
+
 - **Padding Mask**: Prevents attention to padding tokens
 - **Causal Mask**: Prevents decoder from attending to future tokens during training
 
 ### 2. **Positional Encoding**
+
 - Fixed sinusoidal embeddings encode token positions
 - Maintains sequence order information for attention mechanism
 
 ### 3. **Teacher Forcing**
+
 - During training, decoder receives ground-truth target tokens as input
 - Enables faster convergence compared to autoregressive training
 
 ### 4. **Greedy Decoding**
+
 - During inference, decoder uses its own predictions as next input
 - Generates translation token-by-token until EOS token
 
 ### 5. **Multi-Head Attention**
+
 - 8 parallel attention heads capture different aspects of input
 - Each head attends to different parts of the input sequence
 
 ## Dataset
 
 The model trains on the **Multi30K dataset** (English-German parallel corpus):
+
 - **Training**: ~30,000 sentence pairs
 - **Validation**: ~1,000 sentence pairs
 - **Vocabulary**: ~10,000 tokens per language
@@ -137,22 +140,24 @@ The model trains on the **Multi30K dataset** (English-German parallel corpus):
 
 ### Special Tokens
 
-| Token | Index | Purpose |
-|-------|-------|---------|
-| `<unk>` | 0 | Unknown words |
-| `<pad>` | 1 | Padding for batch alignment |
-| `<bos>` | 2 | Beginning of sequence (decoder start) |
-| `<eos>` | 3 | End of sequence (decoder stop) |
+| Token     | Index | Purpose                               |
+| --------- | ----- | ------------------------------------- |
+| `<unk>` | 0     | Unknown words                         |
+| `<pad>` | 1     | Padding for batch alignment           |
+| `<bos>` | 2     | Beginning of sequence (decoder start) |
+| `<eos>` | 3     | End of sequence (decoder stop)        |
 
 ## Training
 
 ### Configuration
+
 - **Batch Size**: 128
 - **Epochs**: 10-40 (depending on computational resources)
 - **Learning Rate**: 0.0001 with Adam optimizer
 - **Loss**: Cross-entropy (padding tokens ignored)
 
 ### Training Time
+
 - **GPU**: ~2-3 hours for 10 epochs
 - **CPU**: ~40-60 minutes per epoch (use pre-trained weights provided)
 
@@ -208,6 +213,7 @@ translate_pdf(
 ## Results
 
 The trained model achieves:
+
 - **Validation Loss**: ~4.5-5.0 after 10 epochs
 - **Sample Quality**: Good grammatical structure with minor vocabulary differences
 - **Inference Speed**: ~100-200ms per sentence (CPU)
@@ -235,13 +241,12 @@ See notebook for training curves and qualitative translation examples.
 ## Error Handling & Robustness
 
 The implementation includes:
+
 - ✓ Input validation (file existence, path checks)
 - ✓ Error recovery (graceful handling of translation failures)
 - ✓ Encoding safety (handles special characters)
 - ✓ Progress tracking (tqdm progress bars)
 - ✓ Comprehensive logging (detailed error messages)
-
-**Note**: The PDF translation function in the original notebook had a critical bug (only saving the last page). Use the error-handled version provided in the documentation.
 
 ## Skills Demonstrated
 
@@ -257,34 +262,22 @@ The implementation includes:
 ## Common Issues & Solutions
 
 ### Out of Memory Error
+
 - Reduce batch size from 128 to 64 or 32
 - Use a smaller model (fewer layers/heads)
 - Run on GPU instead of CPU
 
 ### Poor Translation Quality
+
 - Train for more epochs (40 instead of 10)
 - Use the pre-trained weights provided
 - Ensure correct tokenization and vocabulary
 
 ### Slow Training
+
 - Use GPU (CUDA or Metal)
 - Reduce validation frequency
 - Use the pre-trained model for inference
-
-## Future Improvements
-
-- [ ] Implement beam search for better decoding
-- [ ] Add layer normalization variants
-- [ ] Experiment with different attention mechanisms
-- [ ] Multilingual support (more language pairs)
-- [ ] Real-time translation API
-- [ ] Model quantization for edge deployment
-
-## References
-
-- Vaswani et al. (2017). "Attention is All You Need" ([arxiv](https://arxiv.org/abs/1706.03762))
-- PyTorch Transformer Documentation ([docs](https://pytorch.org/docs/stable/nn.html#transformer-layers))
-- Multi30K Dataset ([github](https://github.com/multi30k/dataset))
 
 ## License
 
@@ -295,19 +288,3 @@ MIT
 - Project completed as part of IBM AI Engineering Professional Certificate
 - Multi30K Dataset: Research community
 - PyTorch & TorchText: Meta AI
-- Architecture based on "Attention is All You Need" paper
-
-## Contact & Support
-
-For questions or issues:
-1. Check the notebook's inline comments for detailed explanations
-2. Review the PDF error handling documentation provided
-3. Consult the references for theoretical background
-4. Open an issue on GitHub with reproduction steps
-
----
-
-**Status**: Production-ready with comprehensive error handling ✓
-**Last Updated**: 2024
-**Python Version**: 3.7+
-**Framework**: PyTorch 1.9+

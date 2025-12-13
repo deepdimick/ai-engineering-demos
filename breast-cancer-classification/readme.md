@@ -7,8 +7,6 @@
 
 A deep learning project implementing binary classification of breast cancer cells (benign vs. malignant) using a fully-connected neural network built with PyTorch.
 
-<!-- Optional: Add a screenshot or demo gif here -->
-<!-- ![Demo](images/demo.png) -->
 
 ## Problem Statement
 
