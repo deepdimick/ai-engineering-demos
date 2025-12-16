@@ -1,0 +1,67 @@
+import asyncio
+import logging
+from beeai_framework.agents.experimental import RequirementAgent
+from beeai_framework.agents.experimental.requirements.conditional import ConditionalRequirement
+from beeai_framework.memory import UnconstrainedMemory
+from beeai_framework.backend import ChatModel, ChatModelParameters
+from beeai_framework.tools.think import ThinkTool
+from beeai_framework.tools.search.wikipedia import WikipediaTool
+from beeai_framework.middleware.trajectory import GlobalTrajectoryMiddleware
+from beeai_framework.tools import Tool
+
+async def controlled_execution_example():
+    """
+    RequirementAgent with Controlled Execution - Requirements System
+    
+    Requirements provide precise control over tool execution order and behavior.
+    Same query, same tracking - but now with strict execution rules.
+    """
+    llm = ChatModel.from_name("watsonx:meta-llama/llama-4-maverick-17b-128e-instruct-fp8", ChatModelParameters(temperature=0))
+    
+    SYSTEM_INSTRUCTIONS = """You are an expert cybersecurity analyst specializing in threat assessment and risk analysis.
+
+Your methodology:
+1. Analyze the threat landscape systematically
+2. Research authoritative sources when available
+3. Provide comprehensive risk assessment with actionable recommendations
+4. Focus on practical, implementable security measures"""
+    
+    # RequirementAgent with controlled execution
+    agent = RequirementAgent(
+        llm=llm,
+        tools=[ThinkTool(), WikipediaTool()],
+        memory=UnconstrainedMemory(),
+        instructions=SYSTEM_INSTRUCTIONS,
+        middlewares=[GlobalTrajectoryMiddleware(included=[Tool])],
+        
+        # REQUIREMENTS: Declarative control over execution flow
+        requirements=[
+            # Must think first
+            ConditionalRequirement(
+                ThinkTool,
+                force_at_step=1,  # Thinking must be the first step
+                min_invocations=1,  # Must think at least once per query
+                max_invocations=3,  # 3 max thinking invocation calls per query
+                consecutive_allowed=False  # No consecutive thinking invocations
+            ),
+            # Must research after systematic thinking
+            ConditionalRequirement(
+                WikipediaTool,
+                only_after=[ThinkTool],  # Thinking must precede research
+                min_invocations=1,  # Must research at least once per query
+                max_invocations=2  # 2 max research invocation calls per query
+            )
+        ]
+    )
+    
+    query = """Analyze the cybersecurity risks of quantum computing for financial institutions. What are the main threats, timeline for concern, and recommended preparation strategies?"""
+    
+    result = await agent.run(query)
+    print(f"\nControlled Execution Analysis:\n{result.answer.text}")
+
+async def main() -> None:
+    logging.getLogger('asyncio').setLevel(logging.CRITICAL)
+    await controlled_execution_example()
+
+if __name__ == "__main__":
+    asyncio.run(main())
